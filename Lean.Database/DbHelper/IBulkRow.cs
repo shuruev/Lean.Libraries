@@ -3,9 +3,9 @@
 namespace Lean.Database
 {
 	/// <summary>
-	/// Interface for data row.
+	/// Interface for data row for bulk operations.
 	/// </summary>
-	public interface IDataRow
+	public interface IBulkRow
 	{
 		/// <summary>
 		/// Creates table for storing the rows.

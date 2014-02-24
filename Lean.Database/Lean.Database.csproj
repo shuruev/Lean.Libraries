@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbHelper\DbHelper.cs" />
-    <Compile Include="DbHelper\IDataRow.cs" />
+    <Compile Include="DbHelper\IBulkRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadExtension.cs" />
     <Compile Include="DbHelper\Sql\SqlDbHelper.cs" />

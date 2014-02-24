@@ -234,14 +234,16 @@ namespace Lean.Database
 		/// <summary>
 		/// Creates bulk table for data rows.
 		/// </summary>
-		public DataTable CreateBulkTable<T>(IEnumerable<T> rows) where T : IDataRow, new()
+		public DataTable CreateBulkTable<T>(IEnumerable<T> rows) where T : IBulkRow, new()
 		{
 			T sample = new T();
 			DataTable table = sample.CreateTable();
 			table.Locale = CultureInfo.InvariantCulture;
 
 			foreach (T row in rows)
+			{
 				row.AddToTable(table);
+			}
 
 			return table;
 		}
@@ -249,14 +251,40 @@ namespace Lean.Database
 		/// <summary>
 		/// Creates bulk table with single column of simple type.
 		/// </summary>
-		public DataTable CreateBulkTable(IEnumerable<object> values, string columnName)
+		public DataTable CreateBulkTable<T>(IEnumerable<T> values, string columnName)
 		{
 			DataTable table = new DataTable();
 			table.Locale = CultureInfo.InvariantCulture;
-			table.Columns.Add(columnName, typeof(string));
+			table.Columns.Add(columnName, typeof(T));
 
-			foreach (string value in values)
+			foreach (T value in values)
+			{
 				table.Rows.Add(value);
+			}
+
+			return table;
+		}
+
+		/// <summary>
+		/// Creates bulk table using more flexible syntax for describing columns and rows generation.
+		/// </summary>
+		public DataTable CreateBulkTable<T>(
+			IEnumerable<T> values,
+			Func<T, object[]> rowGenerator,
+			params Tuple<string, Type>[] columns)
+		{
+			DataTable table = new DataTable();
+			table.Locale = CultureInfo.InvariantCulture;
+
+			foreach (var column in columns)
+			{
+				table.Columns.Add(column.Item1, column.Item2);
+			}
+
+			foreach (T value in values)
+			{
+				table.Rows.Add(rowGenerator.Invoke(value));
+			}
 
 			return table;
 		}
