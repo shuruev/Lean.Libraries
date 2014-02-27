@@ -92,21 +92,6 @@ namespace Lean.Database
 		/// </summary>
 		private DbCommand CreateCommand(
 			DbConnection connection,
-			string commandText,
-			params DbParameter[] parameters)
-		{
-			return CreateCommand(
-				connection,
-				null,
-				commandText,
-				parameters);
-		}
-
-		/// <summary>
-		/// Creates command.
-		/// </summary>
-		private DbCommand CreateCommand(
-			DbConnection connection,
 			DbTransaction transaction,
 			string commandText,
 			params DbParameter[] parameters)
@@ -168,8 +153,25 @@ namespace Lean.Database
 			string commandText,
 			params DbParameter[] parameters)
 		{
+			return ExecuteScalar(
+				connection,
+				null,
+				commandText,
+				parameters);
+		}
+
+		/// <summary>
+		/// Executes scalar command.
+		/// </summary>
+		public object ExecuteScalar(
+			DbConnection connection,
+			DbTransaction transaction,
+			string commandText,
+			params DbParameter[] parameters)
+		{
 			using (DbCommand cmd = CreateCommand(
 				connection,
+				transaction,
 				commandText,
 				parameters))
 			{
@@ -186,8 +188,27 @@ namespace Lean.Database
 			Action<IDataRecord> actionForReader,
 			params DbParameter[] parameters)
 		{
+			ExecuteReader(
+				connection,
+				null,
+				commandText,
+				actionForReader,
+				parameters);
+		}
+
+		/// <summary>
+		/// Executes reader command.
+		/// </summary>
+		public void ExecuteReader(
+			DbConnection connection,
+			DbTransaction transaction,
+			string commandText,
+			Action<IDataRecord> actionForReader,
+			params DbParameter[] parameters)
+		{
 			using (DbCommand cmd = CreateCommand(
 				connection,
+				transaction,
 				commandText,
 				parameters))
 			{
@@ -210,8 +231,27 @@ namespace Lean.Database
 			Func<IDataRecord, T> returnFromReader,
 			params DbParameter[] parameters)
 		{
+			return ExecuteReader(
+				connection,
+				null,
+				commandText,
+				returnFromReader,
+				parameters);
+		}
+
+		/// <summary>
+		/// Executes reader command.
+		/// </summary>
+		public T ExecuteReader<T>(
+			DbConnection connection,
+			DbTransaction transaction,
+			string commandText,
+			Func<IDataRecord, T> returnFromReader,
+			params DbParameter[] parameters)
+		{
 			using (DbCommand cmd = CreateCommand(
 				connection,
+				transaction,
 				commandText,
 				parameters))
 			{
