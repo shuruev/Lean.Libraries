@@ -90,7 +90,22 @@ namespace Lean.Database
 		/// <summary>
 		/// Creates command.
 		/// </summary>
-		private DbCommand CreateCommand(
+		public DbCommand CreateCommand(
+			DbConnection connection,
+			string commandText,
+			params DbParameter[] parameters)
+		{
+			return CreateCommand(
+				connection,
+				null,
+				commandText,
+				parameters);
+		}
+
+		/// <summary>
+		/// Creates command.
+		/// </summary>
+		public DbCommand CreateCommand(
 			DbConnection connection,
 			DbTransaction transaction,
 			string commandText,
