@@ -11,9 +11,16 @@ namespace Lean.Configuration
 		/// Gets configuration value by specified name.
 		/// Returns null if value does not exist.
 		/// </summary>
-		public string GetValue(string name)
+		public virtual string GetValue(string name)
 		{
-			return ConfigurationManager.AppSettings[name];
+			try
+			{
+				return ConfigurationManager.AppSettings[name];
+			}
+			catch
+			{
+				return null;
+			}
 		}
 	}
 }

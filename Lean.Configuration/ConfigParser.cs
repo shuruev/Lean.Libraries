@@ -7,36 +7,23 @@ namespace Lean.Configuration
 	/// <summary>
 	/// Parses configuration settings.
 	/// </summary>
-	public class ConfigParser
+	public static class ConfigParser
 	{
-		private readonly IConfigReader m_reader;
-
-		/// <summary>
-		/// Initializes a new instance.
-		/// </summary>
-		public ConfigParser(IConfigReader reader)
-		{
-			if (reader == null)
-				throw new ArgumentNullException("reader");
-
-			m_reader = reader;
-		}
-
 		/// <summary>
 		/// Checks whether specified configuration value is empty or absent.
 		/// </summary>
-		public bool IsEmpty(string name)
+		public static bool IsEmpty(this IConfigReader reader, string name)
 		{
-			string value = m_reader.GetValue(name);
+			string value = reader.GetValue(name);
 			return value == null;
 		}
 
 		/// <summary>
 		/// Gets configuration value of specified type.
 		/// </summary>
-		public T Get<T>(string name, T defaultValue)
+		public static T Get<T>(this IConfigReader reader, string name, T defaultValue)
 		{
-			string value = m_reader.GetValue(name);
+			string value = reader.GetValue(name);
 			if (value == null)
 				return defaultValue;
 
@@ -46,9 +33,9 @@ namespace Lean.Configuration
 		/// <summary>
 		/// Gets configuration value of specified type.
 		/// </summary>
-		public T Get<T>(string name)
+		public static T Get<T>(this IConfigReader reader, string name)
 		{
-			string value = m_reader.GetValue(name);
+			string value = reader.GetValue(name);
 			if (value == null)
 			{
 				string message = String.Format("Configuration parameter '{0}' is not found.", name);

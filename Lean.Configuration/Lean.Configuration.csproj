@@ -32,6 +32,9 @@
     <DocumentationFile>bin\Release\Lean.Configuration.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -44,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ConfigParser.cs" />
     <Compile Include="Readers\AppConfigReader.cs" />
+    <Compile Include="Readers\AzureConfigReader.cs" />
     <Compile Include="Readers\IConfigReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
