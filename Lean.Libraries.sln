@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lean.Configuration", "Lean.Configuration\Lean.Configuration.csproj", "{20B2ACFD-3484-4401-8A07-17F40D0565C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lean.Configuration.Tests", "Lean.Configuration.Tests\Lean.Configuration.Tests.csproj", "{14F92352-2348-41BA-8422-B362F118F13A}"
