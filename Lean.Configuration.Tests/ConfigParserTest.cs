@@ -176,6 +176,90 @@ namespace Lean.Configuration.Tests
 		}
 
 		[TestMethod]
+		public void Can_Parse_Float_Values()
+		{
+			Action action;
+			var reader = new FakeConfigReader();
+
+			reader.Get<float>("2.5").Should().Be(2.5f);
+			reader.Get<float>("-0.2").Should().Be(-0.2f);
+			reader.Get<float>("1000").Should().Be(1000f);
+			reader.Get<float>("3.4e-12").Should().Be(3.4e-12f);
+
+			reader.Get<float>("NaN").Should().Be(Single.NaN);
+			reader.Get<float>("-Infinity").Should().Be(Single.NegativeInfinity);
+			reader.Get<float>("Infinity").Should().Be(Single.PositiveInfinity);
+
+			action = () => reader.Get<float>("+Infinity");
+			action.ShouldThrow<ConfigurationException>()
+				.WithMessage("Configuration parameter '+Infinity' should contain value of type Single.");
+
+			reader.Get<float>("0").Should().Be(0);
+			reader.Get<float>("+0").Should().Be(0);
+			reader.Get<float>("-0").Should().Be(0);
+
+			action = () => reader.Get<float>("1e39");
+			action.ShouldThrow<ConfigurationException>()
+				.WithMessage("Configuration parameter '1e39' should contain value of type Single.");
+		}
+
+		[TestMethod]
+		public void Can_Parse_Double_Values()
+		{
+			Action action;
+			var reader = new FakeConfigReader();
+
+			reader.Get<double>("2.5").Should().Be(2.5d);
+			reader.Get<double>("-0.2").Should().Be(-0.2d);
+			reader.Get<double>("1000").Should().Be(1000d);
+			reader.Get<double>("3.4e-12").Should().Be(3.4e-12d);
+
+			reader.Get<double>("NaN").Should().Be(Double.NaN);
+			reader.Get<double>("-Infinity").Should().Be(Double.NegativeInfinity);
+			reader.Get<double>("Infinity").Should().Be(Double.PositiveInfinity);
+
+			action = () => reader.Get<double>("+Infinity");
+			action.ShouldThrow<ConfigurationException>()
+				.WithMessage("Configuration parameter '+Infinity' should contain value of type Double.");
+
+			reader.Get<double>("0").Should().Be(0);
+			reader.Get<double>("+0").Should().Be(0);
+			reader.Get<double>("-0").Should().Be(0);
+
+			action = () => reader.Get<double>("1e309");
+			action.ShouldThrow<ConfigurationException>()
+				.WithMessage("Configuration parameter '1e309' should contain value of type Double.");
+		}
+
+		[TestMethod]
+		public void Can_Parse_Decimal_Values()
+		{
+			Action action;
+			var reader = new FakeConfigReader();
+
+			reader.Get<decimal>("2.5").Should().Be(2.5m);
+			reader.Get<decimal>("-0.2").Should().Be(-0.2m);
+			reader.Get<decimal>("1000").Should().Be(1000m);
+			reader.Get<decimal>("0.12345678901234567890").Should().Be(0.12345678901234567890m);
+
+			action = () => reader.Get<decimal>("NaN");
+			action.ShouldThrow<ConfigurationException>()
+				.WithMessage("Configuration parameter 'NaN' should contain value of type Decimal.");
+
+			action = () => reader.Get<decimal>("Infinity");
+			action.ShouldThrow<ConfigurationException>()
+				.WithMessage("Configuration parameter 'Infinity' should contain value of type Decimal.");
+
+			reader.Get<decimal>("0").Should().Be(0);
+			reader.Get<decimal>("+0").Should().Be(0);
+			reader.Get<decimal>("-0").Should().Be(0);
+
+			action = () => reader.Get<decimal>("100000000000000000000000000000");
+			action.ShouldThrow<ConfigurationException>()
+				.WithMessage("Configuration parameter '100000000000000000000000000000' should contain value of type Decimal.");
+		}
+
+		[TestMethod]
 		public void Can_Parse_TimeSpan_Values()
 		{
 			Action action;

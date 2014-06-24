@@ -87,6 +87,21 @@ namespace Lean.Configuration
 					return (T)(object)ParseLong(value);
 				}
 
+				if (typeof(T) == typeof(float))
+				{
+					return (T)(object)ParseFloat(value);
+				}
+
+				if (typeof(T) == typeof(double))
+				{
+					return (T)(object)ParseDouble(value);
+				}
+
+				if (typeof(T) == typeof(decimal))
+				{
+					return (T)(object)ParseDecimal(value);
+				}
+
 				if (typeof(T) == typeof(TimeSpan))
 				{
 					return (T)(object)ParseTimeSpan(value);
@@ -168,6 +183,30 @@ namespace Lean.Configuration
 		private static long ParseLong(string value)
 		{
 			return Int64.Parse(value);
+		}
+
+		/// <summary>
+		/// Parses float configuration value.
+		/// </summary>
+		private static float ParseFloat(string value)
+		{
+			return Single.Parse(value);
+		}
+
+		/// <summary>
+		/// Parses double configuration value.
+		/// </summary>
+		private static double ParseDouble(string value)
+		{
+			return Double.Parse(value);
+		}
+
+		/// <summary>
+		/// Parses decimal configuration value.
+		/// </summary>
+		private static decimal ParseDecimal(string value)
+		{
+			return Decimal.Parse(value);
 		}
 
 		/// <summary>
