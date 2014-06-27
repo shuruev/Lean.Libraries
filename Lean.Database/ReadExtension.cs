@@ -171,6 +171,24 @@ namespace Lean.Database
 		}
 
 		/// <summary>
+		/// Reads non-nullable Single.
+		/// </summary>
+		public static float ReadSingle(this IDataRecord reader, string columnName)
+		{
+			object value = reader[columnName];
+			return (float)value;
+		}
+
+		/// <summary>
+		/// Reads nullable Single.
+		/// </summary>
+		public static float? ReadSingleOrNull(this IDataRecord reader, string columnName)
+		{
+			object value = reader[columnName];
+			return value == DBNull.Value ? null : (float?)value;
+		}
+
+		/// <summary>
 		/// Reads non-nullable Double.
 		/// </summary>
 		public static double ReadDouble(this IDataRecord reader, string columnName)
@@ -186,6 +204,24 @@ namespace Lean.Database
 		{
 			object value = reader[columnName];
 			return value == DBNull.Value ? null : (double?)value;
+		}
+
+		/// <summary>
+		/// Reads non-nullable Decimal.
+		/// </summary>
+		public static decimal ReadDecimal(this IDataRecord reader, string columnName)
+		{
+			object value = reader[columnName];
+			return (decimal)value;
+		}
+
+		/// <summary>
+		/// Reads nullable Decimal.
+		/// </summary>
+		public static decimal? ReadDecimalOrNull(this IDataRecord reader, string columnName)
+		{
+			object value = reader[columnName];
+			return value == DBNull.Value ? null : (decimal?)value;
 		}
 	}
 }
