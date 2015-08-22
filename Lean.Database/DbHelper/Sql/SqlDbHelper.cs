@@ -69,7 +69,7 @@ namespace Lean.Database
 					bulk.ColumnMappings.Add(mapping);
 				}
 
-				tbulk.WriteToServer(table);
+				bulk.WriteToServer(table);
 			}
 		}
 

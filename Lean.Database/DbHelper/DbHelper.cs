@@ -129,12 +129,12 @@ namespace Lean.Database
 		/// <summary>
 		/// Executes non-query command.
 		/// </summary>
-		public void ExecuteNonQuery(
+		public int ExecuteNonQuery(
 			DbConnection connection,
 			string commandText,
 			params DbParameter[] parameters)
 		{
-			ExecuteNonQuery(
+			return ExecuteNonQuery(
 				connection,
 				null,
 				commandText,
@@ -144,7 +144,7 @@ namespace Lean.Database
 		/// <summary>
 		/// Executes non-query command.
 		/// </summary>
-		public void ExecuteNonQuery(
+		public int ExecuteNonQuery(
 			DbConnection connection,
 			DbTransaction transaction,
 			string commandText,
@@ -156,7 +156,7 @@ namespace Lean.Database
 				commandText,
 				parameters))
 			{
-				cmd.ExecuteNonQuery();
+				return cmd.ExecuteNonQuery();
 			}
 		}
 
